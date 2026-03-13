@@ -4,109 +4,364 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TP JS</title>
+  <title>Gastro Delights | Premium Ordering</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary: #6c5ce7;
+      --primary-hover: #7f6ff0;
+      --secondary: #00cec9;
+      --danger: #ff7675;
+      --danger-hover: #d63031;
+      --text-main: #ffffff;
+      --text-muted: #b2bec3;
+      --bg-dark: #0f0c29;
+      --bg-gradient: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      --card-radius: 16px;
+      --btn-radius: 30px;
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: 'Outfit', sans-serif;
     }
 
     body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      color: #fff;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      padding: 2rem;
+      background-attachment: fixed;
     }
 
-    .container {
-      text-align: center;
+    /* Container Layout */
+    .app-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    /* Glassmorphism Panel Base */
+    .glass-panel {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--card-radius);
+      box-shadow: var(--glass-shadow);
+      padding: 2rem;
+    }
+
+    /* Header & Branding */
+    header {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
     }
 
     h1 {
       font-size: 2.5rem;
-      letter-spacing: 0.05em;
-      margin-bottom: 30px;
+      font-weight: 700;
+      background: linear-gradient(to right, #6c5ce7, #00cec9);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    h2::before {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    /* Menu Grid */
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
     }
 
     #mealList {
       list-style: none;
-      text-align: left;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
     }
 
+    /* Meal Card */
     #mealList li {
-      padding: 10px 0;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #mealList li:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+      border-color: rgba(108, 92, 231, 0.5);
+    }
+
+    .meal-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .meal-name {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .meal-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--secondary);
+    }
+
+    /* Sidebar */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      position: sticky;
+      top: 2rem;
+    }
+
+    /* Profile / Wallet Card */
+    .profile-card {
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      background: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+    }
+
+    .avatar-placeholder {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 700;
+      box-shadow: 0 0 20px rgba(108, 92, 231, 0.4);
+    }
+
+    .wallet-stat {
+      margin-top: 1.5rem;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 1rem;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .wallet-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .wallet-amount {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .spend-stat {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 20px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0 0.5rem;
     }
 
-    #mealList button {
-      padding: 5px 15px;
-      background: #6c5ce7;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    #mealList button:hover {
-      background: #7f6ff0;
-    }
+    /* History List */
     #historyList {
       list-style: none;
-      text-align: left;
-      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
     }
 
     #historyList li {
-      padding: 10px 0;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      padding: 1rem;
+      border-left: 3px solid var(--primary);
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      transition: all 0.2s ease;
+    }
+
+    #historyList li:hover {
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .history-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 20px;
-      border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
-    }
-    
-    .delete-btn {
-      background: #e74c3c !important;
-    }
-    .delete-btn:hover {
-      background: #c0392b !important;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding-bottom: 0.5rem;
     }
 
-    .section {
-      margin-bottom: 40px;
-      background: rgba(0, 0, 0, 0.2);
-      padding: 20px;
-      border-radius: 10px;
+    .order-id {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .order-total {
+      font-weight: 600;
+      color: var(--secondary);
+    }
+
+    .order-items {
+      font-size: 0.9rem;
+      line-height: 1.4;
+      color: #ddd;
+    }
+
+    /* Buttons */
+    button {
+      font-family: 'Outfit', sans-serif;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: var(--btn-radius);
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-order {
+      background: var(--primary);
+      color: #fff;
+      width: 100%;
+      margin-top: auto;
+    }
+
+    .btn-order:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .btn-order:active {
+      transform: translateY(0);
+    }
+
+    .delete-btn {
+      background: rgba(255, 118, 117, 0.1);
+      color: var(--danger);
+      border: 1px solid rgba(255, 118, 117, 0.2);
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+      border-radius: 6px;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    .delete-btn:hover {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    /* Modal / Alert styles (Optional polish) */
+    .empty-state {
+      text-align: center;
+      color: var(--text-muted);
+      padding: 2rem 0;
+      font-style: italic;
+    }
+
+    /* Responsive */
+    @media (max-width: 968px) {
+      .app-container {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        position: static;
+        order: -1; /* Sidebar goes top on mobile */
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <h1>TP JS</h1>
+  <div class="app-container">
+    <header>
+      <h1>Gastro Delights</h1>
+    </header>
     
-    <div class="section">
-      <h2>Mon Profil</h2>
-      <p id="walletDisplay">Portefeuille : Chargement...</p>
-      <p id="totalSpentDisplay">Total dépensé : Chargement...</p>
+    <div class="main-content">
+      <div class="glass-panel">
+        <h2>Menu Exquis</h2>
+        <ul id="mealList"></ul>
+      </div>
     </div>
 
-    <div class="section">
-      <h2>Menu</h2>
-      <ul id="mealList"></ul>
-    </div>
-    
-    <div class="section">
-      <h2>Historique des Commandes</h2>
-      <ul id="historyList"></ul>
+    <div class="sidebar">
+      <div class="glass-panel profile-card">
+        <div class="avatar-placeholder">B</div>
+        <h2>Bob</h2>
+        
+        <div class="wallet-stat">
+          <span class="wallet-label">Solde Disponible</span>
+          <span class="wallet-amount" id="walletDisplay">...</span>
+        </div>
+        
+        <div class="spend-stat">
+          <span>Total Dépensé</span>
+          <strong id="totalSpentDisplay">...</strong>
+        </div>
+      </div>
+
+      <div class="glass-panel">
+        <h2>Historique</h2>
+        <ul id="historyList"></ul>
+      </div>
     </div>
   </div>
   <script type="module" src="dist/app.js"></script>
