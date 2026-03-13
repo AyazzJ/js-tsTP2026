@@ -5,6 +5,11 @@ export type Meal = {
   price: number;
 };
 
+// Utility Type 2: Partial
+// Pratique si un jour on veut créer/modifier un repas étape par étape
+export type MealDraft = Partial<Meal>;
+
+
 export async function fetchMeals(): Promise<Meal[]> {
   try {
     const response = await fetch("https://keligmartin.github.io/api/meals.json");

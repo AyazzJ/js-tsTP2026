@@ -6,6 +6,10 @@ export type Order = {
   total: number;
 };
 
+// Utility Type 1: Omit
+// Un résumé de commande qui ne contient pas le tableau détaillé des repas
+export type OrderSummary = Omit<Order, "meals">;
+
 export class TropPauvreErreur extends Error {
   constructor(wallet: number, price: number) {
     super(
