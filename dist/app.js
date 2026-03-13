@@ -8,10 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { fetchMeals } from "./meals.js";
+import { User, TropPauvreErreur } from "./user.js";
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         const meals = yield fetchMeals();
         console.log("Repas récupérés :", meals);
+        const user = new User(1, "Bob", 30);
+        console.log("Utilisateur :", user.name, "- Portefeuille :", user.wallet + "€");
         const mealList = document.getElementById("mealList");
         if (!mealList)
             return;
@@ -21,7 +24,15 @@ function main() {
             const button = document.createElement("button");
             button.textContent = "Commander";
             button.addEventListener("click", () => {
-                console.log("Commande :", meal.name);
+                try {
+                    user.orderMeal(meal);
+                    console.log("Commande OK :", meal.name, "- Reste :", user.wallet + "€");
+                }
+                catch (error) {
+                    if (error instanceof TropPauvreErreur) {
+                        console.error(error.message);
+                    }
+                }
             });
             li.appendChild(button);
             mealList.appendChild(li);
