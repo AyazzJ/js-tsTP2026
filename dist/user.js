@@ -24,12 +24,24 @@ export class User {
         }
         this.wallet -= meal.price;
         const order = {
-            id: this.orders.length + 1,
+            id: Date.now(), // Generate a unique ID based on timestamp
             meals: [meal],
             total: meal.price,
         };
         this.orders.push(order);
-        // Save to localStorage after every order
+        this.saveOrders();
+    }
+    deleteOrder(orderId) {
+        const orderIndex = this.orders.findIndex(o => o.id === orderId);
+        if (orderIndex !== -1) {
+            // Refund the wallet
+            this.wallet += this.orders[orderIndex].total;
+            // Remove from history
+            this.orders.splice(orderIndex, 1);
+            this.saveOrders();
+        }
+    }
+    saveOrders() {
         localStorage.setItem("orders_user_" + this.id, JSON.stringify(this.orders));
     }
 }
