@@ -1,4 +1,3 @@
-// Classe User
 export class User {
     constructor(id, name, wallet) {
         this.id = id;

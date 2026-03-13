@@ -1,4 +1,9 @@
-import { Meal } from "./meals.js";
+import { Meal, fetchMeals } from "./meals.js";
 import { User, Order } from "./user.js";
 
-console.log("App loaded");
+async function main() {
+  const meals = await fetchMeals();
+  console.log("Repas récupérés :", meals);
+}
+
+main();
