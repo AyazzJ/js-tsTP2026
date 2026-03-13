@@ -12,6 +12,20 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         const meals = yield fetchMeals();
         console.log("Repas récupérés :", meals);
+        const mealList = document.getElementById("mealList");
+        if (!mealList)
+            return;
+        for (const meal of meals) {
+            const li = document.createElement("li");
+            li.textContent = meal.name + " - " + meal.price + "€ ";
+            const button = document.createElement("button");
+            button.textContent = "Commander";
+            button.addEventListener("click", () => {
+                console.log("Commande :", meal.name);
+            });
+            li.appendChild(button);
+            mealList.appendChild(li);
+        }
     });
 }
 main();
