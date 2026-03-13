@@ -22,16 +22,50 @@
       color: #fff;
     }
 
+    .container {
+      text-align: center;
+    }
+
     h1 {
       font-size: 2.5rem;
       letter-spacing: 0.05em;
+      margin-bottom: 30px;
+    }
+
+    #mealList {
+      list-style: none;
+      text-align: left;
+    }
+
+    #mealList li {
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    #mealList button {
+      padding: 5px 15px;
+      background: #6c5ce7;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #mealList button:hover {
+      background: #7f6ff0;
     }
   </style>
 </head>
 
 <body>
-  <h1>TP JS</h1>
-  <ul id="mealList"></ul>
+  <div class="container">
+    <h1>TP JS</h1>
+    <ul id="mealList"></ul>
+  </div>
   <script type="module" src="dist/app.js"></script>
 </body>
 
